@@ -1,0 +1,66 @@
+requires = ["setuptools >= 83.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "opensmtpd-filters"
+authors = [
+    { name = "Bernhard Trinnes", email = "43109650+BernyTrinnes@users.noreply.github.com" }
+]
+readme = "README.md"
+requires-python = ">= 3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: System Administrators",
+    "Natural Language :: English",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Communications :: Email :: Filters",
+    "Topic :: Communications :: Email :: Mail Transport Agents",
+    "Topic :: System :: Systems Administration"
+]
+description = "A collection of filters for OpenSMTPd."
+dynamic = ["version"]
+
+[project.optional-dependencies]
+test = [
+    "pytest >= 9.2.0",
+    "pytest-mock >= 3.17.0",
+    "pytest-cov >= 7.1.0",
+]
+
+[project.scripts]
+# filter-x = "filter_engine.x:y"
+
+[tool.setuptools.dynamic]
+version = { attr = "opensmtpd_filters.__version__" }
+
+[tool.coverage.run]
+branch = true
+parallel = true
+sigterm = true
+patch = ["subprocess"]
+omit = [
+    "*/tests/*",
+    "*/test_*"
+]
+
+[tool.coverage.report]
+ignore_errors = true
+show_missing = true
+skip_covered = true
+skip_empty = true
+omit = [
+    "*/tests/*",
+    "*/test_*"
+]
+exclude_also = [
+    # Don't complain if non-runnable code isn't run
+    "if 0:",
+    "if __name__ == .__main__.:",
+
+    # Don't complain about abstract methods, they aren't run
+    "@(abc\\.)?abstractmethod"
+]
